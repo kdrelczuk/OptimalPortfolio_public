@@ -43,6 +43,8 @@
     <Compile Include="IRServerResponseMessage.cs" />
     <Compile Include="Requests\ComputePortfolioFor2AssetsRequest.cs" />
     <Compile Include="Responses\ComputePortfolioResponse.cs" />
+    <Compile Include="RServerEntity.cs" />
+    <Compile Include="RServerEntityType.cs" />
     <Compile Include="RServerRESTProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RServerEcosystemGateway.cs" />

@@ -3,3 +3,8 @@ C:\GitHub\OptimalPortfolio\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\bin\
 C:\GitHub\OptimalPortfolio\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\obj\Debug\OptimalPortfolio.RServer.dll
 C:\GitHub\OptimalPortfolio\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\obj\Debug\OptimalPortfolio.RServer.pdb
 C:\GitHub\OptimalPortfolio\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\obj\Debug\OptimalPortfolio.RServer.csprojResolveAssemblyReference.cache
+C:\Git\OptimalPortfolio_public\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\obj\Debug\OptimalPortfolio.RServer.csprojResolveAssemblyReference.cache
+C:\Git\OptimalPortfolio_public\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\bin\Debug\OptimalPortfolio.RServer.dll
+C:\Git\OptimalPortfolio_public\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\bin\Debug\OptimalPortfolio.RServer.pdb
+C:\Git\OptimalPortfolio_public\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\obj\Debug\OptimalPortfolio.RServer.dll
+C:\Git\OptimalPortfolio_public\OptimalPortfolio.Tanner\OptimalPortfolio.RServer\obj\Debug\OptimalPortfolio.RServer.pdb

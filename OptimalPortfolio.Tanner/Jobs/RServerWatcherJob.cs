@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OptimalPortfolio.RServer;
+using Quartz;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +11,9 @@ namespace OptimalPortfolio.Tanner.Jobs
     class RServerWatcherJob : IJob
     {
 
-        public void Run()
+        public void Execute(IJobExecutionContext context)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(RServerEcosystemGateway.Instance.QueueSize);
         }
     }
 }

@@ -6,32 +6,47 @@ using System.Threading.Tasks;
 using OptimalPortfolio.RServer;
 using OptimalPortfolio.RServer.Requests;
 using OptimalPortfolio.RServer.Responses;
+using Quartz;
+using OptimalPortfolio.Tanner.Jobs;
+using Quartz.Impl;
 
 namespace OptimalPortfolio.Tanner
 {
     class Program
     {
-        static object screen = new object();
 
-        static Action<IRServerResponseMessage> computePortfolioResponse = r =>
-             {
-                 lock (screen)
-                 {
-                     var rr = r as ComputePortfolioResponse;
-                     Console.WriteLine("({0},{1}) at {2}",rr.TickerID1, rr.TickerID2, rr.Server);
-                 }
-             };
+
+
 
         static void Main(string[] args)
         {
-            // requestServer
-            var q = new RServerEcosystemGateway();
+            // construct a scheduler factory  
+            ISchedulerFactory schedFact = new StdSchedulerFactory();
 
-            //var request = new ComputePortfolioFor2AssetsRequest() { TickerID1 = 23, TickerID2 = 57 };
-            Enumerable.Range(0, 130).ToList().ForEach(t =>
-                q.Enqueue(new ComputePortfolioFor2AssetsRequest() { TickerID1 = t, TickerID2 = t }, computePortfolioResponse));
+            // get a scheduler, start the schedular before triggers or anything else  
+            IScheduler sched = schedFact.GetScheduler();
+            sched.Start();
+
+            // create job  
+            IJobDetail job = JobBuilder.Create<RServerWatcherJob>().Build();
+
+            // create trigger  
+            ITrigger trigger = TriggerBuilder.Create()
+                .WithSimpleSchedule(x => x.WithIntervalInSeconds(1).RepeatForever())
+                .Build();
+
+            // Schedule the job using the job and trigger   
+            sched.ScheduleJob(job, trigger);
+            sched.ScheduleJob(JobBuilder.Create<RServerPortfolioJob>().Build(), TriggerBuilder.Create()
+                .WithSimpleSchedule(x => x.WithIntervalInSeconds(3).RepeatForever())
+                .Build());
+
+
+            // requestServer
+
 
             //q.Enqueue(request, computePortfolioResponse);
+
             Console.ReadKey();
         }
     }

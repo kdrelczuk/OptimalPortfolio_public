@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OptimalPortfolio.Tanner.Jobs
+namespace OptimalPortfolio.RServer
 {
-    interface IJob
+    [Flags]
+    public enum RServerEntityType
     {
-        void Run();
+        APIWorker = 1, PortfolioWorker = 2
     }
 }
