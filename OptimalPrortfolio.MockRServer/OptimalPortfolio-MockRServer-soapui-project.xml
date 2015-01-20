@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="OptimalPortfolio.MockRServer" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:restMockService port="20001" path="/RServer" host="GR4-0012495" name="RServer" docroot=""><con:settings/><con:properties/><con:restMockAction name="ComputePortfolioFor2Assets" method="GET" resourcePath="/ComputePortfolioFor2Assets"><con:settings/><con:defaultResponse>CorrectResponse</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>
+if(mockRequest.getPath() .tokenize('/').size() != 4)
+{
+	return "WrongInvocation"
+}
+else if (new Random().nextInt(10) &lt; 1)
+{
+	return "ServerCrashed"
+}
+else
+{
+	return "CorrectResponse"
+}
+
+/*
+// Examples showing how to match based on path, query param and header
+// Match based on path
+def requestPath = mockRequest.getPath()
+log.info "Path: "+ requestPath
+
+if( requestPath.contains("json") )
+{
+    // return the name of the response you want to dispatch
+    return "JSON Response"
+}
+
+
+// Match based on query parameter
+def queryString = mockRequest.getRequest().getQueryString()
+log.info "QueryString: " + queryString
+
+if( queryString.contains("stockholm") )
+{
+    // return the name of the response you want to dispatch
+    return "Response Stockholm"
+}
+else if( queryString.contains("london") )
+{
+    // return the name of the response you want to dispatch
+    return "Response London"
+}
+
+
+// Match based on header
+def acceptEncodingHeadeList = mockRequest.getRequestHeaders().get("Accept-Encoding")
+log.info "AcceptEncodig Header List: " + acceptEncodingHeadeList
+
+if( acceptEncodingHeadeList.contains("gzip,deflate") )
+{
+    // return the name of the response you want to dispatch
+    return "GZiped Response"
+}
+
+*/
+</con:dispatchPath><con:response name="CorrectResponse" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:script>def r = new Random()
+def min = 500
+def max = 4000
+def time = r.nextInt(max-min)+min
+def id1 = mockRequest.getPath() .tokenize('/')[2]
+def id2 =  mockRequest.getPath() .tokenize('/')[3]
+def w1 = r.nextDouble()
+def w2 = 1 - w1
+def er = r.nextDouble()
+def de = r.nextDouble()
+
+requestContext.id1 =  id1
+requestContext.id2 =  id2
+requestContext.time = time
+requestContext.w1 = w1
+requestContext.w2 =  w2
+requestContext.er =  er
+requestContext.de =  de
+
+sleep(time)
+</con:script><con:responseContent>{
+	ID1:  ${id1},
+	ID2:  ${id2},
+	Weight1:${w1},
+	Weight2: ${w2},
+	ExpectedReturn: ${er},
+	PortfolioDeviation: ${de},
+	status: 'OK',
+	code: 200,
+	time: ${time}	
+}</con:responseContent></con:response><con:response name="WrongInvocation" httpResponseStatus="400" mediaType="application/json"><con:settings/><con:responseContent>{
+	status: 'Error'	,
+	code: 400
+}</con:responseContent></con:response><con:response name="ServerCrashed" httpResponseStatus="500" mediaType="application/json"><con:settings/><con:script>def min = 500
+def max = 4000
+def time = new Random().nextInt(max-min)+min
+
+requestContext.time = time
+
+sleep(time)</con:script><con:responseContent>{
+	status: 'Error',
+	code: 500,
+	time: ${time}		
+}</con:responseContent></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
